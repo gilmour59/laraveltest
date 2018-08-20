@@ -4,12 +4,13 @@
             <div class="content">
                 <div class="title m-b-md">
                     {{$title . ' LOL ' . $test . ' array: ' . $arrayTest[1]}} 
-
-                    @if(count($arrayTest) > 0)
-                        @foreach($arrayTest as $array)
-                            <div>{{$array}}</div>
-                        @endforeach
-                    @endif
+                    <ul>
+                        @if(count($arrayTest) > 0)
+                            @foreach($arrayTest as $array)
+                                <li>{{$array}}</li>
+                            @endforeach
+                        @endif
+                    </ul>
                 </div>
 
                 <div class="links">

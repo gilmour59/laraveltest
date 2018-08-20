@@ -6,7 +6,8 @@
         @foreach($posts as $post)
             <div class="card card-block bg-faded">
                 <h3>{{$post->name}}</h3>
-                <h3>{{$post->body}}</h3>
+                <small>{{$post->body}}</small>
+                <small>{{$post->migration}}</small>
             </div>
         @endforeach
     @else
