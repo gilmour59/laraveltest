@@ -22,6 +22,6 @@ class PagesController extends Controller
           'test' => 'test',
           'arrayTest' => ['item1', 'item2', 'item3']
         );
-        return view('pages.services')->with($data);
+        return view('pages.services')->with($data); //this can be done if it is an associative array
     }
 }

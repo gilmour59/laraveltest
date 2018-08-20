@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PostModel;
+use DB;
 
 class PostsController extends Controller
 {
@@ -14,9 +15,16 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = PostModel::all(); //this is an Object gettype returns an object;
+        //$posts = PostModel::all(); 
+        /* ^^this is an Object gettype returns an object; 
+        it may look like an array but it is not */
 
-        return view('posts.index')->with('posts', $posts);
+        //$posts = DB::select('SELECT * FROM post_models');
+
+        //$posts = PostModel::orderBy('created_at', 'desc')->get();
+
+        $posts = PostModel::orderBy('created_at', 'desc')->paginate(2);
+        return view('posts.index')->with('posts', $posts); 
     }
 
     /**
@@ -48,7 +56,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = PostModel::find($id);
+        return view('posts.show')->with('post', $post);
     }
 
     /**
