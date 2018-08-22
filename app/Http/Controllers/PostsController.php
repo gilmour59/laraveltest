@@ -20,7 +20,7 @@ class PostsController extends Controller
         it may look like an array but it is not */
 
         //$posts = DB::select('SELECT * FROM post_models');
-
+        //$posts = PostModel::where('name', 'name one')->get();
         //$posts = PostModel::orderBy('created_at', 'desc')->get();
 
         $posts = PostModel::orderBy('created_at', 'desc')->paginate(2);
@@ -45,7 +45,11 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        return 123;
     }
 
     /**
