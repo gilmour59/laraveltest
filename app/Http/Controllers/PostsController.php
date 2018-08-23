@@ -80,7 +80,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = PostModel::find($id);
+        return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -92,7 +93,19 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'body' => 'required'
+        ]);
+
+        //Create Post 
+        $post = PostModel::find($id);
+        $post->name = $request->input('name');
+        $post->body = $request->input('body');
+        $post->save();
+
+        //Redirecting With Flashed Session Data
+        return redirect('/post')->with('success', 'Post Saved!'); 
     }
 
     /**
@@ -103,6 +116,9 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = PostModel::find($id);
+        $post->delete();
+
+        return redirect('/post')->with('success', 'Post Deleted');
     }
 }
