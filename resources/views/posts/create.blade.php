@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Create Post</h1>
-    
+    <div class="container-fluid">
     <form method="POST" action="{{action('PostsController@store')}}">
         @csrf
         <div class="form-group">
@@ -15,4 +15,5 @@
         </div>
         <input type="submit" value="Submit" class="btn btn-primary"/>
     </form>
+    </div>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Create Post</h1>
-    
+    <div class="container-fluid">
     <form method="POST" action="{{action('PostsController@update', $post->id)}}">
         @csrf
         <div class="form-group">
@@ -16,4 +16,5 @@
         <input type="hidden" name="_method" value="PUT" />
         <input type="submit" value="Submit" class="btn btn-primary"/>
     </form>
+    </div>
 @endsection
