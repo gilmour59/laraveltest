@@ -57,14 +57,30 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image_name' => 'image|nullable|max:1999'
         ]);
+
+        //Handle File Upload
+        if ($request->hasFile('image')) {
+            //get File Name
+            $fileNameWithExtension = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            //Extension of Image/File
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '_' . $extension;
+            //Upload Image (Store to a folder)
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        }else{
+            $fileNameToStore = 'noimage.jpg';
+        }
 
         //Create Post 
         $post = new PostModel();
         $post->name = $request->input('name');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
+        $post->image_name = $fileNameToStore;
         $post->save();
 
         //Redirecting With Flashed Session Data
@@ -92,7 +108,13 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = PostModel::find($id);
-        return view('posts.edit')->with('post', $post);
+
+        //Check for correct User
+        if(auth()->user()->id == $post->user_id){
+            return view('posts.edit')->with('post', $post);
+        }else{
+            return redirect()->back()->with('error', 'Unauthorized!');
+        }
     }
 
     /**
@@ -106,7 +128,8 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'image|nullable|max:1999'
         ]);
 
         //Create Post 
@@ -128,8 +151,12 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = PostModel::find($id);
-        $post->delete();
 
-        return redirect('/post')->with('success', 'Post Deleted');
+        if(auth()->user()->id == $post->user_id){
+            $post->delete();
+            return redirect('/post')->with('success', 'Post Deleted');
+        }else{
+            return redirect('/post')->with('error', 'Unauthorized!');
+        }
     }
 }

@@ -20,9 +20,13 @@
 @endif
 
 <script>
-    $(document).ready(function(){
+    if($('#successMsg').length){
         setTimeout(function() {
             $('#successMsg').addClass('d-none');
         }, 2000)
-    });
+    }else if($('#errorMsg').length){
+        setTimeout(function() {
+            $('#errorMsg').addClass('d-none');
+        }, 2000)
+    }
 </script>
