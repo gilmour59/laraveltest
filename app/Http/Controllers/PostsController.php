@@ -54,6 +54,7 @@ class PostsController extends Controller
         $post = new PostModel();
         $post->name = $request->input('name');
         $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id;
         $post->save();
 
         //Redirecting With Flashed Session Data
