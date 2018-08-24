@@ -9,16 +9,16 @@
         <h3>{{ $post->body }}</h3>
         <hr>
     </div>
-    
-    <div>
-        <a href="/post/{{$post->id}}/edit" class="btn btn-primary float-left mr-2">Edit</a>
-
-        <form action="{{action('PostsController@destroy', $post->id)}}" method="post" class="float-left">
-            @csrf
-            <input name="_method" type="hidden" value="DELETE">
-            <input type="submit" class="btn btn-danger" value="Delete">
-        </form>
-    <div>    
-
-
+    @if (!Auth::guest())
+        @if (Auth::user()->id == $post->user_id)
+            <div>
+                <a href="/post/{{$post->id}}/edit" class="btn btn-primary float-left mr-2">Edit</a>
+                <form action="{{action('PostsController@destroy', $post->id)}}" method="post" class="float-left">
+                    @csrf
+                    <input name="_method" type="hidden" value="DELETE">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </form>
+            <div>             
+        @endif    
+    @endif
 @endsection
