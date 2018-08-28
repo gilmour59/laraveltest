@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PostModel;
 use DB;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -132,6 +133,10 @@ class PostsController extends Controller
             'image' => 'image|nullable|max:1999'
         ]);
 
+        //Create Post 
+        $post = PostModel::find($id);
+        $post->name = $request->input('name');
+        $post->body = $request->input('body');
         //Handle File Upload
         if ($request->hasFile('image')) {
             //get File Name
@@ -142,15 +147,9 @@ class PostsController extends Controller
             $fileNameToStore = $fileName . '_' . time() . '_' . $extension;
             //Upload Image (Store to a folder)
             $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
-        }else{
-            $fileNameToStore = 'noimage.jpg';
-        }
 
-        //Create Post 
-        $post = PostModel::find($id);
-        $post->name = $request->input('name');
-        $post->body = $request->input('body');
-        $post->image_name = $fileNameToStore;
+            $post->image_name = $fileNameToStore;
+        }
         $post->save();
 
         //Redirecting With Flashed Session Data
@@ -168,6 +167,10 @@ class PostsController extends Controller
         $post = PostModel::find($id);
 
         if(auth()->user()->id == $post->user_id){
+            if($post->image_name != 'noimage.jpg'){
+                //Delete the image
+                Storage::delete('public/images/' . $post->image_name);
+            }
             $post->delete();
             return redirect('/post')->with('success', 'Post Deleted');
         }else{
