@@ -7,11 +7,11 @@
         @csrf
         <div class="form-group">
             <label class="control-label" for="name">Name: </label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Name.."/>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Name.." value="{{ old('name') }}"/>
         </div>
         <div class="form-group">
             <label class="control-label" for="body">Body: </label>
-            <textarea class="form-control" name="body" id="body" placeholder="Body.."></textarea>
+            <textarea class="form-control" name="body" id="body" placeholder="Body..">{{ old('body') }}</textarea>
         </div>
         <div class="form-group">
             <label class="control-label" for="image">Image: </label>

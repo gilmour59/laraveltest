@@ -7,6 +7,7 @@
 
     <div class="container-fluid">
         <h3>{{ $post->body }}</h3>
+        <img class="img-thumbnail" src="/storage/images/{{$post->image_name}}" width="250" height="250" alt="Image">
         <hr>
     </div>
     @if (!Auth::guest())

@@ -19,16 +19,18 @@
                     @if (count($posts) > 0)
                         <table class="table table-striped">
                             <tr>
-                                <th class="col-8">Title</th>
-                                <th class="col-2"></th>
-                                <th class="col-2"></th>
+                                <th style="width:40%;">Title</th>
+                                <th style="width:40%;">Created At</th>
+                                <th style="width:10%;"></th>
+                                <th style="width:10%;"></th>
                             </tr>
                             @foreach ($posts as $post)
                                 <tr>
                                     <td>{{$post->name}}</td>
-                                    <td><a href="/post/{{$post->id}}/edit" class="btn btn-primary">Edit</a></td>
+                                    <td>{{$post->created_at}}</td>
+                                    <td><a href="/post/{{$post->id}}/edit" class="btn btn-primary float-right">Edit</a></td>
                                     <td>
-                                        <form action="{{action('PostsController@destroy', $post->id)}}" method="post" class="float-left">
+                                        <form action="{{action('PostsController@destroy', $post->id)}}" method="post" class="float-right">
                                             @csrf
                                             <input name="_method" type="hidden" value="DELETE">
                                             <input type="submit" class="btn btn-danger" value="Delete">
@@ -37,6 +39,7 @@
                                 </tr>
                             @endforeach
                         </table>
+                        {{ $posts->links() }}
                     @else
                         <h5>You Have No Posts!</h5>
                     @endif

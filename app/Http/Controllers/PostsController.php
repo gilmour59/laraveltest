@@ -58,7 +58,7 @@ class PostsController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'body' => 'required',
-            'image_name' => 'image|nullable|max:1999'
+            'image' => 'image|nullable|max:1999|required'
         ]);
 
         //Handle File Upload
@@ -132,10 +132,25 @@ class PostsController extends Controller
             'image' => 'image|nullable|max:1999'
         ]);
 
+        //Handle File Upload
+        if ($request->hasFile('image')) {
+            //get File Name
+            $fileNameWithExtension = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            //Extension of Image/File
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '_' . $extension;
+            //Upload Image (Store to a folder)
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        }else{
+            $fileNameToStore = 'noimage.jpg';
+        }
+
         //Create Post 
         $post = PostModel::find($id);
         $post->name = $request->input('name');
         $post->body = $request->input('body');
+        $post->image_name = $fileNameToStore;
         $post->save();
 
         //Redirecting With Flashed Session Data
