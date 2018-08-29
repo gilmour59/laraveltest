@@ -6,6 +6,11 @@
     -php artisan make:auth
     -php artisan make:migration NameOfMigration
     
+#For String Errors
+
+    -Go to app/Providers/AppServiceProviders.php
+    -add "use Illuminate\Support\Facades\Schema;"
+    -add in function boot() "Schema::defaultStringLength(191);
 
 #Requirements
 
