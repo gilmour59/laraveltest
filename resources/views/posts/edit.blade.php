@@ -13,11 +13,16 @@
             <label class="control-label" for="body">Body: </label>
             <textarea class="form-control" name="body" id="body" placeholder="Body..">{{$post->body}}</textarea>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="image">Image: </label>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="image" name="image">
-                <label class="custom-file-label form-control-file" for="image">Choose file</label>
+        <div class="form-group row">
+            <div class="col col-md-2 col-sm-2">
+                <img class="img-thumbnail" src="/storage/images/{{$post->image_name}}" width="150" height="150" alt="Image">
+            </div>
+            <div class="col col-md-8 col-sm-8">
+                <label class="control-label" for="image">Image: </label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image">
+                    <label class="custom-file-label form-control-file" for="image">Choose file</label>
+                </div>
             </div>
         </div>
         <input type="hidden" name="_method" value="PUT" />

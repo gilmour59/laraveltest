@@ -152,8 +152,12 @@ class PostsController extends Controller
         }
         $post->save();
 
-        //Redirecting With Flashed Session Data
-        return redirect('/post')->with('success', 'Post Saved!'); 
+        if(auth()->user()->id == $post->user_id){
+            //Redirecting With Flashed Session Data
+            return redirect('/home')->with('success', 'Post Saved!'); 
+        }else{
+            return redirect('/home')->with('error', 'Unauthorized!');
+        }
     }
 
     /**

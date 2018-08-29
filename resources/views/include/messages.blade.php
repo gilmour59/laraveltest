@@ -2,7 +2,7 @@
 @if (count($errors) > 0)
     @foreach ($errors->all() as $error) <!--all() because the object has arrays as values-->
         <div class="alert alert-danger">
-            {{$error}}
+            {{$error}} <!-- Errors from validations (not sessions) -->
         </div>
     @endforeach
 @endif

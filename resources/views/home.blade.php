@@ -13,9 +13,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="/post/create" class="btn btn-primary">Create Post</a>
-                    <h3>Your Posts</h3>
 
+                    <div>
+                        <a href="/post/create" class="btn btn-primary float-right mb-2">Create Post</a>
+                    </div>
+
+                    <h3>Your Posts</h3>
                     @if (count($posts) > 0)
                         <table class="table table-striped">
                             <tr>
