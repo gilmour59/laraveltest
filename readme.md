@@ -1,3 +1,12 @@
+#commands used
+    
+    -php artisan make:controller NameOfController
+    -php artisan make:controller NameOfController --resource // --resource for ez CRUD addition
+    -php artisan make:model NameOfModel -m // -m to generate migration files
+    -php artisan make:auth
+    -php artisan make:migration NameOfMigration
+    
+
 #Requirements
 
     1. Composer
